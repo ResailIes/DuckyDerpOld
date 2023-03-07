@@ -1,0 +1,58 @@
+REM TITLE BadAppleAscii
+REM AUTHOR Dylan Caldwell
+REM DESCRIPTION Creates Bad Apple in CMD Terminal
+
+DEFINE DuckyDir $((Get-Volume -FileSystemLabel 'DuckyDerp').DriveLetter + ":") 
+
+VAR $ENABLED = FALSE
+
+REM Shell Instance
+FUNCTION Shell()
+    GUI r
+    DELAY 200
+    STRING powershell;
+    ENTER
+    DELAY 200
+    STRING cd
+    STRING DuckyDir
+    ENTER
+    DELAY 200
+    STRING Import-Module .\DuckyI2A
+    ENTER
+    DELAY 200
+    STRING is2a
+    ENTER
+    DELAY 200
+    STRING .\Frames
+    ENTER
+    DELAY 200
+    STRING 120
+    ENTER
+    DELAY 200
+    STRING 80
+    ENTER
+    DELAY 1000
+END_FUNCTION
+
+REM Initialization
+FUNCTION Init()
+    DELAY 2000
+    IF ($_OS == WINDOWS) THEN 
+        $ENABLED = TRUE
+        Shell()
+    ELSE
+        RETURN
+    END_IF
+END_FUNCTION
+
+REM Button Connection
+BUTTON_DEF
+    IF ($ENABLED == TRUE) THEN
+        $ENABLED = FALSE
+        LED_R
+        STOP_PAYLOAD
+    ELSE
+        LED_G
+        Init()
+    END_IF
+END_BUTTON

@@ -1,0 +1,3 @@
+GCI .\Frames\*.png | ForEach-Object -Process { Rename-Item $_ $_.Name.Replace("bad_apple_", "") }
+
+GCI .\Frames\*.png | Where-Object {$_.BaseName.Length -le 3} | ForEach-Object -Process { Rename-Item $_ -NewName $_.Name.Insert(0,"0") }
